@@ -1,0 +1,9 @@
+__pycache__
+
+build
+dist
+main.spec
+
+sandbox.py
+
+old_*.py
