@@ -47,9 +47,9 @@ class Enemy(Character):
         self.dy = EnemyConfig.y_speed
         x = random.randint(ScreenConfig.x_offset, ScreenConfig.width - ScreenConfig.x_offset)
         # x = random.choice([ScreenConfig.width / 4, 3 * ScreenConfig.width / 4])
-        # x = [ScreenConfig.width / 4, 3 * ScreenConfig.width / 4][eeid]
-        # y = ScreenConfig.height - ScreenConfig.y_offset - MapConfig.interval
-        y = ScreenConfig.y_offset
+        x = [ScreenConfig.width / 4, 3 * ScreenConfig.width / 4][eeid]
+        y = ScreenConfig.height - ScreenConfig.y_offset - MapConfig.interval
+        # y = ScreenConfig.y_offset
         self.pos = (x, y)
         
         self.collided_brick = None

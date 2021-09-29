@@ -1,4 +1,4 @@
-import argparse, random, pickle, sys
+import argparse, random, pickle, sys, time
 from copy import deepcopy
 
 import numpy as np
@@ -84,8 +84,8 @@ if not args.ga:
     genomes = [Network()]
 while True:
     n_gen += 1
-    # if best_genomes is not None:
-    #     genomes.extend(best_genomes)
+    if best_genomes is not None:
+        genomes.extend(best_genomes)
     fitness_list = []
     # s, M, med = 0, 0, 0
     for i in range(0, len(genomes), args.sub):
@@ -136,6 +136,12 @@ while True:
     for i in range(N_BEST):
         genome = genomes[i]
         best_genomes.append(deepcopy(genome))
+        if genome.fitness > 60000:
+            name = time.ctime(time.time())
+            name = name.replace(' ', '-')
+            name += '-' + str(genome.fitness) + '.pkl'
+            with open(name, 'wb') as f:
+                pickle.dump(genome, f)
     
     if args.save:
         with open("cp_best.pkl", 'wb') as f:
@@ -198,11 +204,11 @@ while True:
     # else:
     #     PROB_MUT = 0.4
     #     mut_num = 1
-    PROB_MUT = 0.4
+    PROB_MUT = 0.2
     # mut_num = 4
 
     genomes = []
-    while len(genomes) < (N_POP):
+    while len(genomes) < (N_POP - N_CHILDREN - N_BEST):
         for bg in best_genomes:
             new_genome = deepcopy(bg)
 
@@ -222,16 +228,13 @@ while True:
             #     if random.uniform(0, 1) < PROB_MUT:
             #         new_genome.w2[i, :] += new_genome.w2[i, :] * np.random.randn(new_genome.w2.shape[1])
 
-            # for _ in range(2):
-                # for i in range(new_genome.w1.shape[0]):
-            i = random.randint(0, new_genome.w1.shape[0] - 1)
-            if random.uniform(0, 1) < PROB_MUT:
-                new_genome.w1[i, :] += new_genome.w1[i, :] * np.random.randn(new_genome.w1.shape[1]) # * (random.uniform(0, 1) - 0.5) * 4
-                # for i in range(new_genome.w2.shape[0]):
-            # for _ in range(1):
-            i = random.randint(0, new_genome.w2.shape[0] - 1)
-            if random.uniform(0, 1) < PROB_MUT:
-                new_genome.w2[i, :] += new_genome.w2[i, :] * np.random.randn(new_genome.w2.shape[1]) # * (random.uniform(0, 1) - 0.5) * 4
+            for _ in range(2):
+                for i in range(new_genome.w1.shape[0]):
+                    if random.uniform(0, 1) < PROB_MUT:
+                        new_genome.w1[i, :] += new_genome.w1[i, :] * np.random.randn(new_genome.w1.shape[1]) * (random.uniform(0, 1) - 0.5) * 4
+                for i in range(new_genome.w2.shape[0]):
+                    if random.uniform(0, 1) < PROB_MUT:
+                        new_genome.w2[i, :] += new_genome.w2[i, :] * np.random.randn(new_genome.w2.shape[1]) * (random.uniform(0, 1) - 0.5) * 4
             # for i in range(new_genome.w3.shape[0]):
             #     if random.uniform(0, 1) < PROB_MUT:
             #         new_genome.w3[i, :] += new_genome.w3[i, :] * (random.uniform(0, 1) - 0.5) * 3 + (random.uniform(0, 1) - 0.5)
