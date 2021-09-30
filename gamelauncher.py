@@ -292,10 +292,17 @@ class GameLauncher:
                     # outputs = sorted(enumerate(outputs), key=lambda x: x[1], reverse=True)
 
                     # handle events
-                    if self.ga:
+                    if self.ga == 1:
                         self.ga_handle_event(self.player[i], outputs)
+                    elif self.ga == 2:
+                        self.rule_handle_event(self.player[i])
 
             self.draw()
+    
+    def rule_handle_event(self, player):
+
+
+        pass
 
     def ga_handle_event(self, player, outputs):
         for event in pygame.event.get():

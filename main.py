@@ -25,7 +25,7 @@ N_BEST = 5
 N_CHILDREN = 5
 PROB_MUT = 0.4
 
-v = 17
+v = 18
 
 if args.mute:
     ScreenConfig.volume = 0
@@ -205,7 +205,7 @@ while True:
     # else:
     #     PROB_MUT = 0.4
     #     mut_num = 1
-    PROB_MUT = 0.2
+    PROB_MUT = 0.1
     # mut_num = 4
 
     genomes = []
@@ -229,21 +229,21 @@ while True:
             #     if random.uniform(0, 1) < PROB_MUT:
             #         new_genome.w2[i, :] += new_genome.w2[i, :] * np.random.randn(new_genome.w2.shape[1])
 
-            # for _ in range(2):
-            #     for i in range(new_genome.w1.shape[0]):
-            #         if random.uniform(0, 1) < PROB_MUT:
-            #             new_genome.w1[i, :] += new_genome.w1[i, :] * np.random.randn(new_genome.w1.shape[1]) # * (random.uniform(0, 1) - 0.5) * 4
-            #     for i in range(new_genome.w2.shape[0]):
-            #         if random.uniform(0, 1) < PROB_MUT:
-            #             new_genome.w2[i, :] += new_genome.w2[i, :] * np.random.randn(new_genome.w2.shape[1]) # * (random.uniform(0, 1) - 0.5) * 4
-
             for _ in range(2):
-                if random.uniform(0, 1) < PROB_MUT:
-                    i = random.randint(0, new_genome.w1.shape[0] - 1)
-                    new_genome.w1[i, :] += new_genome.w1[i, :] * np.random.randn(new_genome.w1.shape[1])
-                if random.uniform(0, 1) < PROB_MUT:
-                    i = random.randint(0, new_genome.w2.shape[0] - 1)
-                    new_genome.w2[i, :] += new_genome.w2[i, :] * np.random.randn(new_genome.w2.shape[1])
+                for i in range(new_genome.w1.shape[0]):
+                    if random.uniform(0, 1) < PROB_MUT:
+                        new_genome.w1[i, :] += new_genome.w1[i, :] * np.random.randn(new_genome.w1.shape[1]) # * (random.uniform(0, 1) - 0.5) * 4
+                for i in range(new_genome.w2.shape[0]):
+                    if random.uniform(0, 1) < PROB_MUT:
+                        new_genome.w2[i, :] += new_genome.w2[i, :] * np.random.randn(new_genome.w2.shape[1]) # * (random.uniform(0, 1) - 0.5) * 4
+
+            # for _ in range(2):
+            #     if random.uniform(0, 1) < PROB_MUT:
+            #         i = random.randint(0, new_genome.w1.shape[0] - 1)
+            #         new_genome.w1[i, :] += new_genome.w1[i, :] * np.random.randn(new_genome.w1.shape[1])
+            #     if random.uniform(0, 1) < PROB_MUT:
+            #         i = random.randint(0, new_genome.w2.shape[0] - 1)
+            #         new_genome.w2[i, :] += new_genome.w2[i, :] * np.random.randn(new_genome.w2.shape[1])
 
             # for i in range(new_genome.w3.shape[0]):
             #     if random.uniform(0, 1) < PROB_MUT:
