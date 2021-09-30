@@ -160,7 +160,7 @@ class GameLauncher:
                     Fitness.t_tmp[i][0] = False
                 if Fitness.t_tmp[i][1]:
                     # print("hey", self.time[i])
-                    s = min(6000 / (math.sqrt(self.elapsed[i] - self.t[i] + 1e-9)), 500)
+                    s = min(3600 / (math.sqrt(self.elapsed[i] - self.t[i] + 1e-9)), 300)
                     # print("s2", s)
                     # print("ELAPSED2", (self.elapsed[i] - self.t[i]) // 60)
                     Fitness.value[i] +=s
@@ -387,13 +387,13 @@ class GameLauncher:
             if pd > 0: # 200? 40?
                 if px + 200 > ex > px:
                     # print("XOK", py, ey)
-                    if -20 < py - ey < 100:
+                    if -50 < py - ey < 100:
                         if self.shooting_cond(player):
                             self.shoot(player)
             else:
                 if px - 200 < ex  < px:
                     # print("XOK", py, ey)
-                    if -20 < py - ey < 100:
+                    if -50 < py - ey < 100:
                         if self.shooting_cond(player):
                             self.shoot(player)
 

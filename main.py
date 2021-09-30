@@ -25,11 +25,13 @@ N_BEST = 5
 N_CHILDREN = 5
 PROB_MUT = 0.4
 
+v = 16
+
 if args.mute:
     ScreenConfig.volume = 0
 
 if args.best:
-    with open("cp_best.pkl", "rb") as f:
+    with open(f"cp_best{v}.pkl", "rb") as f:
         genomes = pickle.load(f)
     # print([g for g in genomes])
     for genome in genomes:
@@ -43,22 +45,22 @@ if args.best:
     sys.exit()
 
 if args.checkpoint:
-    with open("n_gen.txt", "r") as f:
+    with open(f"n_gen{v}.txt", "r") as f:
         doc = f.read()
     n_gen = int(doc)
-    with open("genomes.pkl", "rb") as f:
+    with open(f"genomes{v}.pkl", "rb") as f:
         genomes = pickle.load(f)
-    with open("bests.pkl", "rb") as f:
+    with open(f"bests{v}.pkl", "rb") as f:
         best_genomes = pickle.load(f)
-    with open("max.pkl", "rb") as f:
+    with open(f"max{v}.pkl", "rb") as f:
         max_fitness = pickle.load(f)
-    with open("mmax.pkl", "rb") as f:
+    with open(f"mmax{v}.pkl", "rb") as f:
         mmax_fitness = pickle.load(f)
-    with open("mmmax.pkl", "rb") as f:
+    with open(f"mmmax{v}.pkl", "rb") as f:
         mmmax_fitness = pickle.load(f)
-    with open("avg.pkl", "rb") as f:
+    with open(f"avg{v}.pkl", "rb") as f:
         avg_fitness = pickle.load(f)
-    with open("med.pkl", 'rb') as f:
+    with open(f"med{v}.pkl", 'rb') as f:
         med_fitness = pickle.load(f)
     print(f"Past Generation {n_gen} - max: {max_fitness[-1]:.2f}, avg: {avg_fitness[-1]:.2f}, median: {med_fitness[-1]:.2f}")
 else:
@@ -136,19 +138,18 @@ while True:
     for i in range(N_BEST):
         genome = genomes[i]
         best_genomes.append(deepcopy(genome))
-        if genome.fitness > 60000:
-            name = time.ctime(time.time())
-            name = name.replace(' ', '-')
-            name += '-' + str(genome.fitness) + '.pkl'
+        if genome.fitness > 40000:
+        # if True:
+            name = f"v{v}-{n_gen}.pkl"
             with open(name, 'wb') as f:
                 pickle.dump(genome, f)
     
     if args.save:
-        with open("cp_best.pkl", 'wb') as f:
+        with open(f"cp_best{v}.pkl", 'wb') as f:
             pickle.dump(best_genomes, f)
-        with open("cp_genome.pkl", 'wb') as f:
+        with open(f"cp_genome{v}.pkl", 'wb') as f:
             pickle.dump(genomes, f)
-        with open("cp_fit.pkl", 'wb') as f:
+        with open(f"cp_fit{v}.pkl", 'wb') as f:
             pickle.dump(fitness_list, f)
 
     # best_genomes = deepcopy(genomes[:N_BEST])
@@ -231,10 +232,10 @@ while True:
             for _ in range(2):
                 for i in range(new_genome.w1.shape[0]):
                     if random.uniform(0, 1) < PROB_MUT:
-                        new_genome.w1[i, :] += new_genome.w1[i, :] * np.random.randn(new_genome.w1.shape[1]) * (random.uniform(0, 1) - 0.5) * 4
+                        new_genome.w1[i, :] += new_genome.w1[i, :] * np.random.randn(new_genome.w1.shape[1]) # * (random.uniform(0, 1) - 0.5) * 4
                 for i in range(new_genome.w2.shape[0]):
                     if random.uniform(0, 1) < PROB_MUT:
-                        new_genome.w2[i, :] += new_genome.w2[i, :] * np.random.randn(new_genome.w2.shape[1]) * (random.uniform(0, 1) - 0.5) * 4
+                        new_genome.w2[i, :] += new_genome.w2[i, :] * np.random.randn(new_genome.w2.shape[1]) # * (random.uniform(0, 1) - 0.5) * 4
             # for i in range(new_genome.w3.shape[0]):
             #     if random.uniform(0, 1) < PROB_MUT:
             #         new_genome.w3[i, :] += new_genome.w3[i, :] * (random.uniform(0, 1) - 0.5) * 3 + (random.uniform(0, 1) - 0.5)
@@ -259,20 +260,21 @@ while True:
             genomes.append(new_genome)
     
     if args.save:
-        with open("n_gen.txt", "w") as f:
+        with open(f"n_gen{v}.txt", "w") as f:
             f.write(str(n_gen))
-        with open("genomes.pkl", 'wb') as f:
+        with open(f"genomes{v}.pkl", 'wb') as f:
             pickle.dump(genomes, f)
-        with open("bests.pkl", 'wb') as f:
+        with open(f"bests{v}.pkl", 'wb') as f:
             pickle.dump(best_genomes, f)
-        with open("max.pkl", "wb") as f:
+        with open(f"max{v}.pkl", "wb") as f:
             pickle.dump(max_fitness, f)
-        with open("mmax.pkl", "wb") as f:
+        with open(f"mmax{v}.pkl", "wb") as f:
             pickle.dump(mmax_fitness, f)
-        with open("mmmax.pkl", "wb") as f:
+        with open(f"mmmax{v}.pkl", "wb") as f:
             pickle.dump(mmmax_fitness, f)
-        with open("avg.pkl", 'wb') as f:
+        with open(f"avg{v}.pkl", 'wb') as f:
             pickle.dump(avg_fitness, f)
-        with open("med.pkl", 'wb') as f:
+        with open(f"med{v}.pkl", 'wb') as f:
             pickle.dump(med_fitness, f)
+
 gl.quit()

@@ -122,7 +122,7 @@ class Bubble(Character):
                 Fitness.value[self.i] -= 100
             else:
                 self.sounds['bubble_kill'].play()
-                Fitness.value[self.i] += 500
+                Fitness.value[self.i] += 700
                 Fitness.t_tmp[self.i][1] = True
             Enemy.group.add(self.enemy)
         Bubble.group.remove(self)
