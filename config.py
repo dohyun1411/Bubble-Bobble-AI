@@ -1,13 +1,14 @@
 class ScreenConfig:
 
     width = 1200
-    height = 480
+    # height = 480
+    height = 720
     width_height = (width, height)
     x_offset = 36
     y_offset = 60
 
     fps = 60
-    max_time_sec = 15
+    max_time_sec = 20
     max_time = max_time_sec * fps
     warning_time = 5 * fps
 
@@ -82,9 +83,9 @@ class MapConfig:
     num_floor = 4
     floor_types = [ # _ : brick, . : empty
         '___________........___________',
-        '....________......________....',
         '....______________________....',
         '_______.....______....._______',
+        '....________......________....',
         '___...____......______________',
         '______________......____...___',
         '....____....______............',

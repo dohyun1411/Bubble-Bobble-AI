@@ -15,8 +15,8 @@ parser.add_argument("-c", "--checkpoint", action="store_true")
 parser.add_argument("-b", "--best", action="store_true")
 parser.add_argument("-n", "--noplot", action="store_true")
 parser.add_argument('-m', '--mute', action="store_true")
-parser.add_argument("-s", "--sub", type=int, default=17)
-parser.add_argument('-p', '--pop', type=int, default=50)
+parser.add_argument("-s", "--sub", type=int, default=12)
+parser.add_argument('-p', '--pop', type=int, default=60)
 parser.add_argument('--save', type=int, default=1)
 args = parser.parse_args()
 
@@ -25,21 +25,35 @@ N_BEST = 5
 N_CHILDREN = 5
 PROB_MUT = 0.4
 
-v = 18
+v = 19
 
 if args.mute:
     ScreenConfig.volume = 0
 
 if args.best:
-    with open(f"cp_best{v}.pkl", "rb") as f:
-        genomes = pickle.load(f)
+    genomes = []
+    for i in range(164):
+        name = f"v18-{i}.pkl"
+        try:
+            with open(name, "rb") as f:
+                # genomes = pickle.load(f)
+                genome = pickle.load(f)
+                genomes.append(genome)
+        except:
+            continue
+        # print(name)
+        # print(f"Past Fitness: {genome.fitness:.2f}")
+    genomes.sort(key=lambda x: x.fitness, reverse=True)
+    gl = GameLauncher(ga=args.ga, genomes=genomes[:10])
+    gl.run()
+    print(f"Current Fitness: {Fitness.value}")
     # print([g for g in genomes])
-    for genome in genomes:
-        print(f"Past Fitness: {genome.fitness:.2f}")
-        gl = GameLauncher(ga=args.ga, genomes=[genome])
-        # gl = GameLauncher(ga=True, genomes=genomes)
-        gl.run()
-        print(f"Current Fitness: {Fitness.value[0]:.2f}")
+    # for genome in genomes:
+    #     print(f"Past Fitness: {genome.fitness:.2f}")
+    #     gl = GameLauncher(ga=args.ga, genomes=[genome])
+    #     # gl = GameLauncher(ga=True, genomes=genomes)
+    #     gl.run()
+    #     print(f"Current Fitness: {Fitness.value[0]:.2f}")
     print("Done")
     gl.quit()
     sys.exit()

@@ -25,14 +25,14 @@ class Map:
     group = pygame.sprite.Group()
     
     def __init__(self, brick_image):
-        # for floor in range(MapConfig.num_floor):
-        for floor in range(2):
+        for floor in range(MapConfig.num_floor):
+        # for floor in range(2):
             if floor == 0: # bottom
                 floor_type = MapConfig.bottom_floor_type
             else:
                 # random_index = random.randint(0, len(MapConfig.floor_types) - 1)
-                random_index = 1
-                floor_type = MapConfig.floor_types[random_index]
+                # random_index = 1
+                floor_type = MapConfig.floor_types[floor]
                 
             for i, char in enumerate(floor_type):
                 if char == '_':

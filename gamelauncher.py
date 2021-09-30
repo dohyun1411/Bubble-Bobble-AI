@@ -151,7 +151,7 @@ class GameLauncher:
                     Enemy.bonus_time[i] = 0
                 
                 if Fitness.t_tmp[i][0]:
-                    s = min(6000 / (math.sqrt(self.elapsed[i] - self.t[i] + 1e-9)), 500)
+                    s = min(6700 / (math.sqrt(self.elapsed[i] - self.t[i] + 1e-9)), 500)
                     # print("ELAPSED1", (self.elapsed[i] - self.t[i]) // 60)
                     # print("s1", s)
                     Fitness.value[i] +=s
@@ -160,7 +160,7 @@ class GameLauncher:
                     Fitness.t_tmp[i][0] = False
                 if Fitness.t_tmp[i][1]:
                     # print("hey", self.time[i])
-                    s = min(3600 / (math.sqrt(self.elapsed[i] - self.t[i] + 1e-9)), 300)
+                    s = min(6700 / (math.sqrt(self.elapsed[i] - self.t[i] + 1e-9)), 350)
                     # print("s2", s)
                     # print("ELAPSED2", (self.elapsed[i] - self.t[i]) // 60)
                     Fitness.value[i] +=s

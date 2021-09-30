@@ -84,8 +84,8 @@ class Network:
         ppx = px / ScreenConfig.width
         ppy = py / ScreenConfig.height
         pdx = player.dx / PlayerConfig.x_speed
-        pdy = player.dy / 30
-
+        pdy = player.dy / 40
+        
         i = player.i
 
         # out = []
