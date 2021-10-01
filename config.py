@@ -2,7 +2,7 @@ class ScreenConfig:
 
     width = 1200
     # height = 480
-    height = 720
+    height = 840
     width_height = (width, height)
     x_offset = 36
     y_offset = 60

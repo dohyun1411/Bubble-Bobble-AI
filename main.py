@@ -25,7 +25,7 @@ N_BEST = 5
 N_CHILDREN = 5
 PROB_MUT = 0.4
 
-v = 20
+v = 21
 
 if args.mute:
     ScreenConfig.volume = 0
