@@ -289,7 +289,7 @@ class GameLauncher:
                 if not self.gameover[i]:
                     # outputs
                     outputs = self.genomes[i].forward(self.player[i], Enemy.group, Bubble.group)
-                    # outputs = sorted(enumerate(outputs), key=lambda x: x[1], reverse=True)
+                    outputs = sorted(enumerate(outputs), key=lambda x: x[1], reverse=True)
 
                     # handle events
                     if self.ga == 1:
