@@ -64,12 +64,12 @@ class Network:
     def __init__(self):
         self.fitness = 0
         # self.input_layer = 10
-        self.input_layer = 6
-        self.hidden_layer1 = 4
-        self.hidden_layer2 = 4
+        self.input_layer = 8 # px, py, pdx, pdy, ex, ey, edx, edy
+        self.hidden_layer1 = 12
+        self.hidden_layer2 = 8
         # self.hidden_layer3 = 8
         # self.hidden_layer4 = 6
-        self.output_layer = 3
+        self.output_layer = 6
         self.w1 = np.random.randn(self.input_layer, self.hidden_layer1)
         self.w2 = np.random.randn(self.hidden_layer1, self.hidden_layer2)
         self.w3 = np.random.randn(self.hidden_layer2, self.output_layer)
@@ -83,13 +83,13 @@ class Network:
         px, py = player.pos
         ppx = px / ScreenConfig.width
         ppy = py / ScreenConfig.height
-        pdx = player.dx / PlayerConfig.x_speed
-        pdy = player.dy / 40
+        pdx = (player.dx + PlayerConfig.x_speed) / (2 * PlayerConfig.x_speed)
+        pdy = (player.dy + 40) / 80
         
         i = player.i
 
         # out = []
-        out = [ppx, ppy]
+        out = [ppx, ppy, pdx, pdy]
         tmp = []
         for bubble in bubble_group:
             if bubble.i != i: continue
@@ -101,8 +101,8 @@ class Network:
             y /= ScreenConfig.height
             dx = 0 if bubble.s == 'jumping' else bubble.dx
             dy = bubble.dy if bubble.s == 'jumping' else 0
-            dx /= 8
-            dy /= 2
+            dx = (dx + 8) / 16
+            dy = (dy + 2) / 4
 
             if pdx != 0 and (x - ppx > 0) == (pdx > 0):
                 # print("CORRECT X")
@@ -137,8 +137,8 @@ class Network:
             dx = enemy.dx if enemy.status == 'walking' else 0
             dy = 0 if enemy.status in {'walking', 'standing'} else enemy.dy
             # print('enemy:', dx, dy)
-            dx /= 8
-            dy /= 2
+            dx = (dx + 8) / 16
+            dy = (dy + 2) / 4
 
             # print(x, ppx, pdx)
             if pdx != 0 and (x - ppx > 0) == (pdx > 0):

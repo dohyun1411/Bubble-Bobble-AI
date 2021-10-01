@@ -319,12 +319,12 @@ class GameLauncher:
         if self.shooting_delay[i] > ScreenConfig.shooting_delay:
             self.shooting_delay[i] = 0
         # print(outputs)
-        if outputs[0] > 0.4:
-            self.left(player)
-        if outputs[1] > 0.4:
-            self.right(player)
-        if outputs[2] > 0.4 and not player.is_jumpping:
-            self.jump(player)
+        # if outputs[0] > 0.4:
+        #     self.left(player)
+        # if outputs[1] > 0.4:
+        #     self.right(player)
+        # if outputs[2] > 0.4 and not player.is_jumpping:
+        #     self.jump(player)
         # for output_idx, _ in outputs:
         #     if output_idx == 0:
         #         # print('s')
@@ -349,6 +349,30 @@ class GameLauncher:
             #     self.right(player)
             #     self.jump(player)
             #     break
+        output_idx = outputs[0][0]
+        if output_idx == 0:
+            pass
+        elif output_idx == 1:
+            self.left(player)
+        elif output_idx == 2:
+            self.right(player)
+        elif output_idx == 3:
+            if self.player[i].is_jumpping:
+                pass
+            else:
+                self.jump(player)
+        elif output_idx == 4:
+            if self.player[i].is_jumpping:
+                self.left(player)
+            else:
+                self.left(player)
+                self.jump(player)
+        elif output_idx == 5:
+            if self.player[i].is_jumpping:
+                self.right(player)
+            else:
+                self.right(player)
+                self.jump(player)
 
         self.shoot_when_enemy_is_nearby(player)
         # if self.shooting_cond(player):

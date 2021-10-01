@@ -8,7 +8,7 @@ class ScreenConfig:
     y_offset = 60
 
     fps = 60
-    max_time_sec = 20
+    max_time_sec = 10
     max_time = max_time_sec * fps
     warning_time = 5 * fps
 

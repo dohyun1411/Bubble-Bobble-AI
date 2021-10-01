@@ -25,7 +25,7 @@ N_BEST = 5
 N_CHILDREN = 5
 PROB_MUT = 0.4
 
-v = 23
+v = 30
 
 if args.mute:
     ScreenConfig.volume = 0
@@ -243,16 +243,16 @@ while True:
             #     if random.uniform(0, 1) < PROB_MUT:
             #         new_genome.w2[i, :] += new_genome.w2[i, :] * np.random.randn(new_genome.w2.shape[1])
 
-            for _ in range(2):
-                for i in range(new_genome.w1.shape[0]):
-                    if random.uniform(0, 1) < PROB_MUT:
-                        new_genome.w1[i, :] += new_genome.w1[i, :] * np.random.randn(new_genome.w1.shape[1]) # * (random.uniform(0, 1) - 0.5) * 4
-                for i in range(new_genome.w2.shape[0]):
-                    if random.uniform(0, 1) < PROB_MUT:
-                        new_genome.w2[i, :] += new_genome.w2[i, :] * np.random.randn(new_genome.w2.shape[1]) # * (random.uniform(0, 1) - 0.5) * 4
-                for i in range(new_genome.w3.shape[0]):
-                    if random.uniform(0, 1) < PROB_MUT:
-                        new_genome.w3[i, :] += new_genome.w3[i, :] * np.random.randn(new_genome.w3.shape[1])
+            # for _ in range(2):
+            for i in range(new_genome.w1.shape[0]):
+                if random.uniform(0, 1) < PROB_MUT:
+                    new_genome.w1[i, :] += new_genome.w1[i, :] * np.random.randn(new_genome.w1.shape[1]) # * (random.uniform(0, 1) - 0.5) * 4
+            for i in range(new_genome.w2.shape[0]):
+                if random.uniform(0, 1) < PROB_MUT:
+                    new_genome.w2[i, :] += new_genome.w2[i, :] * np.random.randn(new_genome.w2.shape[1]) # * (random.uniform(0, 1) - 0.5) * 4
+            for i in range(new_genome.w3.shape[0]):
+                if random.uniform(0, 1) < PROB_MUT:
+                    new_genome.w3[i, :] += new_genome.w3[i, :] * np.random.randn(new_genome.w3.shape[1])
 
             # for _ in range(2):
             #     if random.uniform(0, 1) < PROB_MUT:
