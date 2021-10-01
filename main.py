@@ -25,7 +25,7 @@ N_BEST = 5
 N_CHILDREN = 5
 PROB_MUT = 0.4
 
-v = 19
+v = 20
 
 if args.mute:
     ScreenConfig.volume = 0
@@ -152,7 +152,7 @@ while True:
     for i in range(N_BEST):
         genome = genomes[i]
         best_genomes.append(deepcopy(genome))
-        if genome.fitness > 30000:
+        if genome.fitness > 20000:
         # if True:
             name = f"v{v}-{n_gen}.pkl"
             with open(name, 'wb') as f:
