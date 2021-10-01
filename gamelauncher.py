@@ -319,11 +319,11 @@ class GameLauncher:
         if self.shooting_delay[i] > ScreenConfig.shooting_delay:
             self.shooting_delay[i] = 0
         # print(outputs)
-        if outputs[0] > 0.3:
+        if outputs[0] > 0.4:
             self.left(player)
-        if outputs[1] > 0.3:
+        if outputs[1] > 0.4:
             self.right(player)
-        if outputs[2] > 0.3 and not player.is_jumpping:
+        if outputs[2] > 0.4 and not player.is_jumpping:
             self.jump(player)
         # for output_idx, _ in outputs:
         #     if output_idx == 0:

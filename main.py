@@ -15,8 +15,8 @@ parser.add_argument("-c", "--checkpoint", action="store_true")
 parser.add_argument("-b", "--best", action="store_true")
 parser.add_argument("-n", "--noplot", action="store_true")
 parser.add_argument('-m', '--mute', action="store_true")
-parser.add_argument("-s", "--sub", type=int, default=12)
-parser.add_argument('-p', '--pop', type=int, default=60)
+parser.add_argument("-s", "--sub", type=int, default=17)
+parser.add_argument('-p', '--pop', type=int, default=50)
 parser.add_argument('--save', type=int, default=1)
 args = parser.parse_args()
 
@@ -25,7 +25,7 @@ N_BEST = 5
 N_CHILDREN = 5
 PROB_MUT = 0.4
 
-v = 21
+v = 23
 
 if args.mute:
     ScreenConfig.volume = 0
@@ -206,10 +206,10 @@ while True:
         new_genome.w2[i, :cut] = a_genome.w2[i, :cut]
         new_genome.w2[i, cut:] = b_genome.w2[i, cut:]
 
-        # i = random.randint(0, new_genome.w5.shape[0] - 1)
-        # cut = random.randint(0, new_genome.w5.shape[1])
-        # new_genome.w5[i, :cut] = a_genome.w5[i, :cut]
-        # new_genome.w5[i, cut:] = b_genome.w5[i, cut:]
+        i = random.randint(0, new_genome.w3.shape[0] - 1)
+        cut = random.randint(0, new_genome.w3.shape[1])
+        new_genome.w3[i, :cut] = a_genome.w3[i, :cut]
+        new_genome.w3[i, cut:] = b_genome.w3[i, cut:]
 
         best_genomes.append(new_genome)
 
@@ -250,6 +250,9 @@ while True:
                 for i in range(new_genome.w2.shape[0]):
                     if random.uniform(0, 1) < PROB_MUT:
                         new_genome.w2[i, :] += new_genome.w2[i, :] * np.random.randn(new_genome.w2.shape[1]) # * (random.uniform(0, 1) - 0.5) * 4
+                for i in range(new_genome.w3.shape[0]):
+                    if random.uniform(0, 1) < PROB_MUT:
+                        new_genome.w3[i, :] += new_genome.w3[i, :] * np.random.randn(new_genome.w3.shape[1])
 
             # for _ in range(2):
             #     if random.uniform(0, 1) < PROB_MUT:

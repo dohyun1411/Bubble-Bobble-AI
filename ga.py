@@ -66,13 +66,13 @@ class Network:
         # self.input_layer = 10
         self.input_layer = 6
         self.hidden_layer1 = 4
-        # self.hidden_layer2 = 4
+        self.hidden_layer2 = 4
         # self.hidden_layer3 = 8
         # self.hidden_layer4 = 6
         self.output_layer = 3
         self.w1 = np.random.randn(self.input_layer, self.hidden_layer1)
-        self.w2 = np.random.randn(self.hidden_layer1, self.output_layer)
-        # self.w3 = np.random.randn(self.hidden_layer2, self.output_layer)
+        self.w2 = np.random.randn(self.hidden_layer1, self.hidden_layer2)
+        self.w3 = np.random.randn(self.hidden_layer2, self.output_layer)
         # self.w4 = np.random.randn(self.hidden_layer3, self.output_layer)
         # self.w5 = np.random.randn(self.hidden_layer4, self.output_layer)
     
@@ -168,12 +168,16 @@ class Network:
         out = np.array(out)
         out = np.dot(out, self.w1)
         out = self.leaky_relu(out)
+        # out = self.leaky_relu(out)
+        # out = np.tanh(out)
         # print(out)
         # out = np.sinh(out)
         # print(out)
         out = np.dot(out, self.w2)
+        out = self.leaky_relu(out)
         # out = self.leaky_relu(out)
-        # out = np.dot(out, self.w3)
+        # out = np.tanh(out)
+        out = np.dot(out, self.w3)
         # out = self.relu(out)
         # out = np.dot(out, self.w4)
         # out = self.relu(out)

@@ -25,8 +25,8 @@ class Map:
     group = pygame.sprite.Group()
     
     def __init__(self, brick_image):
-        for floor in range(MapConfig.num_floor):
-        # for floor in range(2):
+        # for floor in range(MapConfig.num_floor):
+        for floor in range(3):
             if floor == 0: # bottom
                 floor_type = MapConfig.bottom_floor_type
             else:
