@@ -145,10 +145,17 @@ class GameLauncher:
                 # print("player", self.player[i].dx, self.player[i].dy)
                 if self.gameover[i]:
                     self.time[i] = 0
+                # else:
+                #     self.time[i] = self.time[i] - 1 + Enemy.bonus_time[i] * ScreenConfig.fps
+                #     self.elapsed[i] += 1
+                #     Enemy.bonus_time[i] = 0
                 else:
-                    self.time[i] = self.time[i] - 1 + Enemy.bonus_time[i] * ScreenConfig.fps
+                    if Enemy.bonus_time[i] > 0:
+                        # print("bonus")
+                        self.time[i] = Enemy.bonus_time[i] * ScreenConfig.fps
+                        Enemy.bonus_time[i] = 0
+                    self.time[i] -= 1
                     self.elapsed[i] += 1
-                    Enemy.bonus_time[i] = 0
                 
                 if Fitness.t_tmp[i][0]:
                     s = min(6700 / (math.sqrt(self.elapsed[i] - self.t[i] + 1e-9)), 500)
@@ -593,7 +600,8 @@ class GameLauncher:
         # draw heart
         Heart.group.draw(self.screen)
         # print([t // 60 for t in self.time])
-        time = max(self.elapsed)
+        # time = max(self.elapsed)
+        time = max(self.time)
         
         # if time <= ScreenConfig.warning_time:
         #     time_color = ScreenConfig.RED
@@ -603,7 +611,7 @@ class GameLauncher:
 
         # text time
         time_font = pygame.font.SysFont(ScreenConfig.time_font, ScreenConfig.time_size)
-        time_text = time_font.render(f"TIME: {time // ScreenConfig.fps}", True, ScreenConfig.WHITE)
+        time_text = time_font.render(f"TIME: {time // ScreenConfig.fps + 1}", True, ScreenConfig.WHITE)
         time_rect = time_text.get_rect(center=ScreenConfig.time_pos)
         self.screen.blit(time_text, time_rect)
 

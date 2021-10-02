@@ -238,7 +238,7 @@ class Enemy(Character):
             self.initial_flying = False
             Enemy(self.images, self.round, eid=self.eid, i=self.i, eeid=1 - self.eeid)
             Enemy.score[self.i] += EnemyConfig.scores[self.id - 1]
-            Enemy.bonus_time[self.i] = 10
+            Enemy.bonus_time[self.i] = 15
         else:
             self.dy += EnemyConfig.flying_gravity
         self.angle = (self.angle + EnemyConfig.flying_angular_speed) % 360

@@ -65,8 +65,8 @@ class Network:
         self.fitness = 0
         # self.input_layer = 10
         self.input_layer = 8 # px, py, pdx, pdy, ex, ey, edx, edy
-        self.hidden_layer1 = 12
-        self.hidden_layer2 = 8
+        self.hidden_layer1 = 8
+        self.hidden_layer2 = 6
         # self.hidden_layer3 = 8
         # self.hidden_layer4 = 6
         self.output_layer = 6
