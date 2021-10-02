@@ -1,14 +1,14 @@
 class ScreenConfig:
 
     width = 1200
-    # height = 480
-    height = 660
+    height = 480
+    # height = 660
     width_height = (width, height)
     x_offset = 36
     y_offset = 60
 
     fps = 60
-    max_time_sec = 15
+    max_time_sec = 10
     max_time = max_time_sec * fps
     warning_time = 5 * fps
 
@@ -16,7 +16,7 @@ class ScreenConfig:
 
     enemy_num_list = [1, 2, 3, 5, 7, 10, 15, 20]
     new_round_delay = 120
-    shooting_delay = 10
+    shooting_delay = 5
     player_damaged_delay = 120
     blinking_interval = 20
 

@@ -25,7 +25,7 @@ N_BEST = 5
 N_CHILDREN = 5
 PROB_MUT = 0.4
 
-v = 50
+v = 53
 
 if args.mute:
     ScreenConfig.volume = 0
@@ -152,7 +152,7 @@ while True:
     for i in range(N_BEST):
         genome = genomes[i]
         best_genomes.append(deepcopy(genome))
-        if genome.fitness > 20000:
+        if genome.fitness > 12000:
         # if True:
             name = f"v{v}-{n_gen}.pkl"
             with open(name, 'wb') as f:
@@ -206,10 +206,10 @@ while True:
         new_genome.w2[i, :cut] = a_genome.w2[i, :cut]
         new_genome.w2[i, cut:] = b_genome.w2[i, cut:]
 
-        i = random.randint(0, new_genome.w3.shape[0] - 1)
-        cut = random.randint(0, new_genome.w3.shape[1])
-        new_genome.w3[i, :cut] = a_genome.w3[i, :cut]
-        new_genome.w3[i, cut:] = b_genome.w3[i, cut:]
+        # i = random.randint(0, new_genome.w3.shape[0] - 1)
+        # cut = random.randint(0, new_genome.w3.shape[1])
+        # new_genome.w3[i, :cut] = a_genome.w3[i, :cut]
+        # new_genome.w3[i, cut:] = b_genome.w3[i, cut:]
 
         best_genomes.append(new_genome)
 
@@ -219,7 +219,7 @@ while True:
     # else:
     #     PROB_MUT = 0.4
     #     mut_num = 1
-    PROB_MUT = 0.1
+    PROB_MUT = 0.2
     # mut_num = 4
 
     genomes = []
@@ -260,9 +260,9 @@ while True:
             for i in range(new_genome.w2.shape[0]):
                 if random.uniform(0, 1) < PROB_MUT:
                     new_genome.w2[i, :] += new_genome.w2[i, :] * np.random.randn(new_genome.w2.shape[1]) # * (random.uniform(0, 1) - 0.5) * 4
-            for i in range(new_genome.w3.shape[0]):
-                if random.uniform(0, 1) < PROB_MUT:
-                    new_genome.w3[i, :] += new_genome.w3[i, :] * np.random.randn(new_genome.w3.shape[1])
+            # for i in range(new_genome.w3.shape[0]):
+            #     if random.uniform(0, 1) < PROB_MUT:
+            #         new_genome.w3[i, :] += new_genome.w3[i, :] * np.random.randn(new_genome.w3.shape[1])
 
             # for i in range(new_genome.w3.shape[0]):
             #     if random.uniform(0, 1) < PROB_MUT:

@@ -158,7 +158,7 @@ class GameLauncher:
                     self.elapsed[i] += 1
                 
                 if Fitness.t_tmp[i][0]:
-                    s = min(6700 / (math.sqrt(self.elapsed[i] - self.t[i] + 1e-9)), 500)
+                    s = min(6000 / (math.sqrt(self.elapsed[i] - self.t[i] + 1e-9)), 750)
                     # print("ELAPSED1", (self.elapsed[i] - self.t[i]) // 60)
                     # print("s1", s)
                     Fitness.value[i] +=s
@@ -167,7 +167,7 @@ class GameLauncher:
                     Fitness.t_tmp[i][0] = False
                 if Fitness.t_tmp[i][1]:
                     # print("hey", self.time[i])
-                    s = min(6700 / (math.sqrt(self.elapsed[i] - self.t[i] + 1e-9)), 350)
+                    s = min(4000 / (math.sqrt(self.elapsed[i] - self.t[i] + 1e-9)), 500)
                     # print("s2", s)
                     # print("ELAPSED2", (self.elapsed[i] - self.t[i]) // 60)
                     Fitness.value[i] +=s
@@ -269,6 +269,7 @@ class GameLauncher:
                     # print("X", Fitness.x_dir[i], "Y", Fitness.y_dir[i])
                     # print("eX", Fitness.x_dir[i] * ScreenConfig.max_time / self.elapsed[i], "eY", Fitness.y_dir[i] * ScreenConfig.max_time / self.elapsed[i])
                     fit_dir = (0.1 * Fitness.x_dir[i] + 2 * Fitness.y_dir[i]) * ScreenConfig.max_time / self.elapsed[i]
+                    
                     # print(fit_dir)
                     # if fit_dir > 500:
                     #     fit_dir = 500
@@ -296,7 +297,7 @@ class GameLauncher:
                 if not self.gameover[i]:
                     # outputs
                     outputs = self.genomes[i].forward(self.player[i], Enemy.group, Bubble.group)
-                    outputs = sorted(enumerate(outputs), key=lambda x: x[1], reverse=True)
+                    # outputs = sorted(enumerate(outputs), key=lambda x: x[1], reverse=True)
 
                     # handle events
                     if self.ga == 1:
@@ -326,12 +327,12 @@ class GameLauncher:
         if self.shooting_delay[i] > ScreenConfig.shooting_delay:
             self.shooting_delay[i] = 0
         # print(outputs)
-        # if outputs[0] > 0.4:
-        #     self.left(player)
-        # if outputs[1] > 0.4:
-        #     self.right(player)
-        # if outputs[2] > 0.4 and not player.is_jumpping:
-        #     self.jump(player)
+        if outputs[0] > 1/3:
+            self.left(player)
+        if outputs[1] > 1/3:
+            self.right(player)
+        if outputs[2] > 1/3 and not player.is_jumpping:
+             self.jump(player)
         # for output_idx, _ in outputs:
         #     if output_idx == 0:
         #         # print('s')
@@ -356,30 +357,30 @@ class GameLauncher:
             #     self.right(player)
             #     self.jump(player)
             #     break
-        output_idx = outputs[0][0]
-        if output_idx == 0:
-            pass
-        elif output_idx == 1:
-            self.left(player)
-        elif output_idx == 2:
-            self.right(player)
-        elif output_idx == 3:
-            if self.player[i].is_jumpping:
-                pass
-            else:
-                self.jump(player)
-        elif output_idx == 4:
-            if self.player[i].is_jumpping:
-                self.left(player)
-            else:
-                self.left(player)
-                self.jump(player)
-        elif output_idx == 5:
-            if self.player[i].is_jumpping:
-                self.right(player)
-            else:
-                self.right(player)
-                self.jump(player)
+        # output_idx = outputs[0][0]
+        # if output_idx == 0:
+        #     pass
+        # elif output_idx == 1:
+        #     self.left(player)
+        # elif output_idx == 2:
+        #     self.right(player)
+        # elif output_idx == 3:
+        #     if self.player[i].is_jumpping:
+        #         pass
+        #     else:
+        #         self.jump(player)
+        # elif output_idx == 4:
+        #     if self.player[i].is_jumpping:
+        #         self.left(player)
+        #     else:
+        #         self.left(player)
+        #         self.jump(player)
+        # elif output_idx == 5:
+        #     if self.player[i].is_jumpping:
+        #         self.right(player)
+        #     else:
+        #         self.right(player)
+        #         self.jump(player)
 
         self.shoot_when_enemy_is_nearby(player)
         # if self.shooting_cond(player):
@@ -425,13 +426,13 @@ class GameLauncher:
             if pd > 0: # 200? 40?
                 if px + 200 > ex > px:
                     # print("XOK", py, ey)
-                    if -50 < py - ey < 100:
+                    if -40 < py - ey < 80:
                         if self.shooting_cond(player):
                             self.shoot(player)
             else:
                 if px - 200 < ex  < px:
                     # print("XOK", py, ey)
-                    if -50 < py - ey < 100:
+                    if -40 < py - ey < 80:
                         if self.shooting_cond(player):
                             self.shoot(player)
 

@@ -119,10 +119,10 @@ class Bubble(Character):
                 self.enemy.is_dead = False
                 self.enemy.make_invincible()
                 BubbleConfig.gameover[self.i] = True
-                Fitness.value[self.i] -= 100
+                # Fitness.value[self.i] -= 100
             else:
                 self.sounds['bubble_kill'].play()
-                Fitness.value[self.i] += 700
+                # Fitness.value[self.i] += 700
                 Fitness.t_tmp[self.i][1] = True
             Enemy.group.add(self.enemy)
         Bubble.group.remove(self)

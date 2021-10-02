@@ -24,13 +24,14 @@ class Enemy(Character):
                 flying_enemy += 1
         return Enemy.count == flying_enemy
 
-    def __init__(self, images, round, i, eid=0, eeid=0):
+    def __init__(self, images, round, i, eid=0, eeid=0, prev_pos=(ScreenConfig.width // 2, ScreenConfig.height - ScreenConfig.y_offset)):
         super(Enemy, self).__init__()
 
         self.i = i
         self.eeid = eeid
         self.images = images
         self.round = round
+        self.status = 'walking'
 
         # TODO: make id depends on round
         weights = EnemyConfig.weights
@@ -45,14 +46,20 @@ class Enemy(Character):
         self.dir = random.choice([Direction.LEFT, Direction.RIGHT])
         self.dx = self.x_speed * self.dir
         self.dy = EnemyConfig.y_speed
-        x = random.randint(ScreenConfig.x_offset, ScreenConfig.width - ScreenConfig.x_offset)
+        # x = random.randint(ScreenConfig.x_offset, ScreenConfig.width - ScreenConfig.x_offset)
+        x_candi = list(range(ScreenConfig.x_offset, prev_pos[0] - 200)) + list(range(prev_pos[0] + 200, ScreenConfig.width - ScreenConfig.x_offset))
+        x = random.choice(x_candi)
         # x = random.choice([ScreenConfig.width / 4, 3 * ScreenConfig.width / 4])
         # x = [ScreenConfig.width / 4, 3 * ScreenConfig.width / 4][eeid]
         # y = ScreenConfig.height - ScreenConfig.y_offset - MapConfig.interval
         # y = ScreenConfig.y_offset
         y = random.randint(ScreenConfig.y_offset, ScreenConfig.height - ScreenConfig.y_offset)
+        pseudo_enemy = PseudoEnemy((x, y), self.image)
+        while pygame.sprite.spritecollide(pseudo_enemy, Map.group, False):
+            y = random.randint(ScreenConfig.y_offset, ScreenConfig.height - ScreenConfig.y_offset)
+            pseudo_enemy = PseudoEnemy((x, y), self.image)
         self.pos = (x, y)
-        
+        # print(self.pos, prev_pos)
         self.collided_brick = None
 
         self.original_id = self.id
@@ -60,7 +67,6 @@ class Enemy(Character):
         self.time_being_invincible = 0
         self.invincible_before = False
 
-        self.status = 'walking'
         self.prev_action = self.walk
         self.stand_before = False
         self.jump_before = False
@@ -227,7 +233,7 @@ class Enemy(Character):
         self.is_dead = True
         Enemy.group.remove(self)
         i = self.i
-        Fitness.value[i] += 500
+        # Fitness.value[i] += 500
         Fitness.t_tmp[i][0] = True
 
     def fly(self):
@@ -236,9 +242,9 @@ class Enemy(Character):
             self.dx = flying_x_speed * self.player_dir + self.player_dx
             self.dy = -EnemyConfig.flying_y_speed + self.player_dy / 4
             self.initial_flying = False
-            Enemy(self.images, self.round, eid=self.eid, i=self.i, eeid=1 - self.eeid)
+            Enemy(self.images, self.round, eid=self.eid, i=self.i, eeid=1 - self.eeid, prev_pos=self.pos)
             Enemy.score[self.i] += EnemyConfig.scores[self.id - 1]
-            Enemy.bonus_time[self.i] = 15
+            Enemy.bonus_time[self.i] = 10
         else:
             self.dy += EnemyConfig.flying_gravity
         self.angle = (self.angle + EnemyConfig.flying_angular_speed) % 360
