@@ -152,9 +152,9 @@ while True:
     for i in range(N_BEST):
         genome = genomes[i]
         best_genomes.append(deepcopy(genome))
-        if genome.fitness > 12000:
+        if genome.fitness > 20000:
         # if True:
-            name = f"v{v}-{n_gen}.pkl"
+            name = f"v{v}-{n_gen}-{i}.pkl"
             with open(name, 'wb') as f:
                 pickle.dump(genome, f)
     
