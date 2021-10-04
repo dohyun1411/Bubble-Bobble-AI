@@ -1,63 +1,6 @@
-import enum, random
-
 import numpy as np
 
 from config import *
-
-
-class Action(enum.Enum):
-
-    STOP = 0
-    LEFT = 1
-    RIGHT = 2
-    JUMP = 3
-    LEFT_JUMP = 4
-    RIGHT_JUMP = 5
-
-
-class GA:
-
-    monster_threshold = 200
-
-    def __init__(self, player, enemy_group, bubble_group):
-        self.player = player
-        self.enemy_group = enemy_group
-        self.bubble_group = bubble_group
-    
-    def menhattan_dist(self, pos1, pos2):
-        return abs(pos1[0] - pos2[0]) + abs(pos1[1] + pos2[1])
-
-    def fitness_func(self, solution, solution_idx):
-        if (len(self.enemy_group) + len(self.bubble_group)) == 0:
-            return 0
-        
-        fitness = 0
-        player_pos = self.solution_player_pos(solution)
-        target = None
-        if self.bubble_group:
-            target = list(self.bubble_group)[0]
-            target_pos = target.pos
-            fitness = 100. / self.menhattan_dist(player_pos, target_pos)
-        
-        for i, enemy in enumerate(self.enemy_group):
-            if i == 0 and target is None:
-                target = enemy
-                target_pos = target.pos
-                fitness = 1. / self.menhattan_dist(player_pos, target_pos)
-            else:
-                if abs(player_pos[0] - enemy.pos[0]) < GA.monster_threshold \
-                    and abs(player_pos[1] - enemy.pos[1]) < GA.monster_threshold:
-                    fitness -= 3.
-                else:
-                    fitness += 1.
-        
-        return fitness
-    
-    def solution_player_pos(self, action):
-        if action is Action.STOP:
-            return self.player.pos
-        elif action is Action.LEFT:
-            pass
 
 
 class Network:

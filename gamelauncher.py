@@ -302,15 +302,10 @@ class GameLauncher:
                     # handle events
                     if self.ga == 1:
                         self.ga_handle_event(self.player[i], outputs)
-                    elif self.ga == 2:
-                        self.rule_handle_event(self.player[i])
+                    elif self.ga == 0:
+                        self.handle_event()
 
             self.draw()
-    
-    def rule_handle_event(self, player):
-
-
-        pass
 
     def ga_handle_event(self, player, outputs):
         for event in pygame.event.get():

@@ -12,12 +12,12 @@ from ga import *
 parser = argparse.ArgumentParser()
 parser.add_argument("--ga", type=int, default=1)
 parser.add_argument("-c", "--checkpoint", action="store_true")
-parser.add_argument("-b", "--best", action="store_true")
+parser.add_argument("-t", "--test", action="store_true")
 parser.add_argument("-n", "--noplot", action="store_true")
 parser.add_argument('-m', '--mute', action="store_true")
 parser.add_argument("-s", "--sub", type=int, default=17)
 parser.add_argument('-p', '--pop', type=int, default=50)
-parser.add_argument('--save', type=int, default=1)
+parser.add_argument('--save', type=int, default=0)
 args = parser.parse_args()
 
 N_POP = args.pop
@@ -25,26 +25,33 @@ N_BEST = 5
 N_CHILDREN = 5
 PROB_MUT = 0.4
 
-v = 53
+v = 100
 
 if args.mute:
     ScreenConfig.volume = 0
 
-if args.best:
+if not args.test:
+    genome_name = {}
     genomes = []
-    for i in range(164):
-        name = f"v18-{i}.pkl"
-        try:
-            with open(name, "rb") as f:
-                # genomes = pickle.load(f)
-                genome = pickle.load(f)
-                genomes.append(genome)
-        except:
-            continue
+    for i in range(300):
+        for j in range(10):
+            name = f"v53-{i}-{j}.pkl"
+            try:
+                with open(name, "rb") as f:
+                    # genomes = pickle.load(f)
+                    genome = pickle.load(f)
+                    if genome.fitness > 60000:
+                        genomes.append(genome)
+                        genome_name[genome] = name
+            except:
+                continue
         # print(name)
         # print(f"Past Fitness: {genome.fitness:.2f}")
+    # print([g.fitness for g in genomes], len(genomes))
     genomes.sort(key=lambda x: x.fitness, reverse=True)
-    gl = GameLauncher(ga=args.ga, genomes=genomes[:10])
+    if not args.ga:
+        genomes = [Network()]
+    gl = GameLauncher(ga=args.ga, genomes=genomes[:5])
     gl.run()
     print(f"Current Fitness: {Fitness.value}")
     # print([g for g in genomes])
