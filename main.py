@@ -33,25 +33,34 @@ if args.mute:
 if not args.test:
     genome_name = {}
     genomes = []
-    for i in range(300):
-        for j in range(10):
-            name = f"v53-{i}-{j}.pkl"
-            try:
-                with open(name, "rb") as f:
-                    # genomes = pickle.load(f)
-                    genome = pickle.load(f)
-                    if genome.fitness > 60000:
-                        genomes.append(genome)
-                        genome_name[genome] = name
-            except:
-                continue
+    # for i in range(300):
+    #     for j in range(10):
+    #         name = f"v53-{i}-{j}.pkl"
+    #         try:
+    #             with open(name, "rb") as f:
+    #                 # genomes = pickle.load(f)
+    #                 genome = pickle.load(f)
+    #                 if genome.fitness > 70000:
+    #                     genomes.append(genome)
+    #                     genome_name[genome] = name
+    #         except:
+    #             continue
         # print(name)
         # print(f"Past Fitness: {genome.fitness:.2f}")
     # print([g.fitness for g in genomes], len(genomes))
+    # names = ['v53-158-0.pkl', 'v53-203-0.pkl', 'v53-256-0.pkl', 'v53-204-0.pkl', 'v53-264-0.pkl']
+    names = ['v53-158-0.pkl', 'v53-161-0.pkl', 'v53-167-0.pkl', 'v53-257-0.pkl', 'v53-203-0.pkl']
+    for name in names:
+        with open(name, 'rb') as f:
+            genomes.append(pickle.load(f))
+
     genomes.sort(key=lambda x: x.fitness, reverse=True)
+    # print(len(genomes))
+    # for g in genomes[:10]:
+    #     print(genome_name[g], g.fitness)
     if not args.ga:
         genomes = [Network()]
-    gl = GameLauncher(ga=args.ga, genomes=genomes[:5])
+    gl = GameLauncher(ga=args.ga, genomes=genomes[:10])
     gl.run()
     print(f"Current Fitness: {Fitness.value}")
     # print([g for g in genomes])
@@ -62,6 +71,7 @@ if not args.test:
     #     gl.run()
     #     print(f"Current Fitness: {Fitness.value[0]:.2f}")
     print("Done")
+    time.sleep(1)
     gl.quit()
     sys.exit()
 

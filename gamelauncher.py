@@ -283,7 +283,8 @@ class GameLauncher:
                         self.corner += 1
                         # print(self.corner)
                     if BubbleConfig.gameover[i] or self.time[i] <= 0:
-                        if BubbleConfig.gameover[i]:
+                        # if BubbleConfig.gameover[i]:
+                        if True:
                             self.player[i].sounds['damaged'].play()
                         Boom(self.player[i].images['boom'], self.player[i].pos, i=i)
                         # DeadPlayer(self.player[i].images['dead'], self.player[i].dir, self.player[i].pos, i=i)
