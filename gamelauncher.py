@@ -15,10 +15,12 @@ from ga import *
 
 class GameLauncher:
 
-    def __init__(self, ga, genomes=None):
+    def __init__(self, ga, genomes=None, best=False):
         # initialize
         pygame.init()
         pygame.display.set_caption('Simple Bubble Bobble')
+
+        self.best = best
 
         self.screen = pygame.display.set_mode(ScreenConfig.width_height)
         self.clock = pygame.time.Clock()
@@ -112,6 +114,7 @@ class GameLauncher:
         # self.text_time = 0
         Enemy.count = [0 for _ in range(self.n_gen)]
         Enemy.score = [0 for _ in range(self.n_gen)]
+        self.score2 = [0 for _ in range(self.n_gen)]
         self.num_left = self.n_gen
         self.elapsed = [0 for _ in range(self.n_gen)]
         self.corner = 0
@@ -174,6 +177,7 @@ class GameLauncher:
                     # print(s)
                     self.t[i] = self.elapsed[i]
                     Fitness.t_tmp[i][1] = False
+                    self.score2[i] += 1
             
                 # update score
                 # if not self.gameover:
@@ -607,10 +611,64 @@ class GameLauncher:
         # self.time_color = ScreenConfig.WHITE
 
         # text time
-        time_font = pygame.font.SysFont(ScreenConfig.time_font, ScreenConfig.time_size)
-        time_text = time_font.render(f"TIME: {time // ScreenConfig.fps + 1}", True, ScreenConfig.WHITE)
-        time_rect = time_text.get_rect(center=ScreenConfig.time_pos)
-        self.screen.blit(time_text, time_rect)
+        if not self.best:
+            time_font = pygame.font.SysFont(ScreenConfig.time_font, ScreenConfig.time_size)
+            time_text = time_font.render(f"TIME: {time // ScreenConfig.fps + 1}", True, ScreenConfig.WHITE)
+            time_rect = time_text.get_rect(center=ScreenConfig.time_pos)
+            self.screen.blit(time_text, time_rect)
+        else:
+            font = pygame.font.SysFont(ScreenConfig.time_font, ScreenConfig.time_size)
+            a_text = font.render("AGENT", True, (255, 255, 255))
+            a_rect = a_text.get_rect(center=(60, 30))
+            s_text = font.render("SCORE", True, (255, 255, 255))
+            s_rect = s_text.get_rect(center=(60, 80))
+            t_text = font.render("TIME", True, (255, 255, 255))
+            t_rect = t_text.get_rect(center=(60, 130))
+
+            self.screen.blit(a_text, a_rect)
+            self.screen.blit(s_text, s_rect)
+            self.screen.blit(t_text, t_rect)
+
+            agent_pos = [160, 260, 360, 460, 560]
+            for ii, ap in enumerate(agent_pos):
+                t = font.render(f"{ii}", True, (255, 255, 255))
+                r = t.get_rect(center=(ap, 30))
+                self.screen.blit(t, r)
+
+            for ii, ap in enumerate(agent_pos):
+                ss = self.score2[ii]
+                t = font.render(f"{ss}", True, (255, 255, 255))
+                r = t.get_rect(center=(ap, 80))
+                self.screen.blit(t, r)
+                
+            for ii, ap in enumerate(agent_pos):
+                tt = 0 if self.time[ii] == 0 else self.time[ii] // ScreenConfig.fps + 1
+                t = font.render(f"{tt}", True, (255, 255, 255))
+                r = t.get_rect(center=(ap, 130))
+                self.screen.blit(t, r)
+            
+            for p in Player.group:
+                ii = p.i
+                pos = p.pos
+                t = font.render(f"{ii}", True, (255, 255, 255))
+                r = t.get_rect(center=pos)
+                self.screen.blit(t, r)
+            
+            for p in Enemy.group:
+                ii = p.i
+                pos = p.pos
+                t = font.render(f"{ii}", True, (255, 255, 255))
+                r = t.get_rect(center=pos)
+                self.screen.blit(t, r)
+            
+            for p in Bubble.group:
+                ii = p.i
+                pos = p.pos
+                t = font.render(f"{ii}", True, (255, 255, 255))
+                r = t.get_rect(center=pos)
+                self.screen.blit(t, r)
+
+
 
         # text round
         # round_font = pygame.font.SysFont(ScreenConfig.round_font, ScreenConfig.round_size)
@@ -626,10 +684,11 @@ class GameLauncher:
         # self.screen.blit(player_score_text, player_score_rect)
 
         # text left
-        score_font = pygame.font.SysFont(ScreenConfig.score_font, ScreenConfig.score_size)
-        player_score_text = score_font.render(f"LEFT: {self.num_left}", True, ScreenConfig.score_color)
-        player_score_rect = player_score_text.get_rect(center=ScreenConfig.player_score_pos)
-        self.screen.blit(player_score_text, player_score_rect)
+        if not self.best:
+            score_font = pygame.font.SysFont(ScreenConfig.score_font, ScreenConfig.score_size)
+            player_score_text = score_font.render(f"LEFT: {self.num_left}", True, ScreenConfig.score_color)
+            player_score_rect = player_score_text.get_rect(center=ScreenConfig.player_score_pos)
+            self.screen.blit(player_score_text, player_score_rect)
 
         # if self.gameover:
         #     # text gameover
