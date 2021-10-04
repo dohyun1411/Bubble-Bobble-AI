@@ -1,5 +1,7 @@
 # Bubble Bobble AI
-Bubble Bobble AI using Genetic Algorithm
+Bubble Bobble AI using Genetic Algorithm.
+
+Please go [here](https://github.com/dohyun1411/Simple-Bubble-Bobble) for more information about this game.
 
 ## Requirements
 ```
@@ -17,8 +19,12 @@ pip install pygame
 python main.py
 ```
 
-If you want to play with yourself
+If you want to play yourself
 ```
 python main.py --ga 0
 ```
-Please go [here](https://github.com/dohyun1411/Simple-Bubble-Bobble) for more information about this game.
+
+If you want to train the agents yourself
+```
+python main.py -t
+```

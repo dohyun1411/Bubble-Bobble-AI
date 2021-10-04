@@ -60,7 +60,7 @@ if not args.test:
     #     print(genome_name[g], g.fitness)
     if not args.ga:
         genomes = [Network()]
-    gl = GameLauncher(ga=args.ga, genomes=genomes, best=True)
+    gl = GameLauncher(ga=args.ga, genomes=genomes, best=args.ga)
     gl.run()
     print(f"Current Fitness: {Fitness.value}")
     # print([g for g in genomes])
