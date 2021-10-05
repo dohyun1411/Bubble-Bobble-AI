@@ -15,16 +15,17 @@ pip install pygame
 ```
 
 ## How to Run
+To play with pre-trained agents
 ```
 python main.py
 ```
 
-If you want to play yourself
+To play yourself
 ```
 python main.py --ga 0
 ```
 
-If you want to train the agents yourself
+To train new agents
 ```
 python main.py -t
 ```
