@@ -5,7 +5,7 @@ This repository is for training a Bubble Bobble AI agent using genetic algorithm
 
 For more about this game, please visit https://github.com/dohyun1411/Simple-Bubble-Bobble.
 
-Here, I provided the [report](./report.pdf) and the [presentation slide](./presentation.pptx) for your understanding.
+Here, I provided the [report](./report.pdf) and the [presentation slide](./presentation.pptx) for your better understanding.
 
 ## Requirements
 ```
