@@ -1,5 +1,5 @@
 # Bubble Bobble AI
-![image](https://user-images.githubusercontent.com/65074958/147385490-ca17bd3a-2067-47f8-856c-71948dddb4df.png)
+![ezgif com-gif-maker (5)](https://user-images.githubusercontent.com/65074958/147385743-f8610df0-0cea-4fa3-aaa9-0732da429a0d.gif)
 
 This repository is for training a Bubble Bobble AI agent using genetic algorithm.
 
